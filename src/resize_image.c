@@ -3,8 +3,10 @@
 
 float nn_interpolate(image im, float x, float y, int c)
 {
-    // TODO Fill in
-    return 0;
+    int rounded_x = (int) round(x);
+    int rounded_y = (int) round(y);
+    return get_pixel(im, rounded_x, rounded_y, c);
+    
 }
 
 image nn_resize(image im, int w, int h)
@@ -24,4 +26,3 @@ image bilinear_resize(image im, int w, int h)
     // TODO
     return make_image(1,1,1);
 }
-
