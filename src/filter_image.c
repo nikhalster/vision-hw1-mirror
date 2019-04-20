@@ -8,7 +8,11 @@
 
 void l1_normalize(image im)
 {
-    // TODO
+    for (int j = 0; j < im.h; j++){
+        for (int k = 0; k < im.w; k++){
+            im.data[(k + (im.w * j))] = 1.0 / (im.h * im.w);
+        }
+    }
 }
 
 image make_box_filter(int w)
