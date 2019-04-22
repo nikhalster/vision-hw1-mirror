@@ -17,8 +17,9 @@ void l1_normalize(image im)
 
 image make_box_filter(int w)
 {
-    // TODO
-    return make_image(1,1,1);
+    image im = make_image(w,w,1);
+    l1_normalize(im);
+    return im;
 }
 
 image convolve_image(image im, image filter, int preserve)
