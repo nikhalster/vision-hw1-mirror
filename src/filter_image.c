@@ -10,7 +10,9 @@ void l1_normalize(image im)
 {
     for (int j = 0; j < im.h; j++){
         for (int k = 0; k < im.w; k++){
-            im.data[(k + (im.w * j))] = 1.0 / (im.h * im.w);
+            // im.data[(k + (im.w * j))] = 1.0 / (im.h * im.w);
+                set_pixel(im,k,j,0,get_pixel(im,k,j,0)/(1.0*im.w*im.h));
+
         }
     }
 }
