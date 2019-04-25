@@ -20,6 +20,15 @@ void l1_normalize(image im)
 image make_box_filter(int w)
 {
     image im = make_image(w,w,1);
+
+    for (int j = 0; j < im.w; j++){
+        for (int k = 0; k < im.h; k++){
+            for (int l = 0; l < im.c; l++){
+                set_pixel(im, j, k, l, 1.0);
+            }
+        }
+    }
+
     l1_normalize(im);
     return im;
 }
