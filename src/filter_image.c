@@ -35,7 +35,66 @@ image make_box_filter(int w)
 
 image convolve_image(image im, image filter, int preserve)
 {
-    // TODO
+    //If filter and im have the same number of channels then it's just a normal convolution. We sum over spatial and channel dimensions and produce a 1 channel image. UNLESS:
+//If preserve is set to 1 we should produce an image with the same number of channels as the input. This is useful if, for example, we want to run a box filter over an RGB image and get out an RGB image. This means each channel in the image will be filtered by the corresponding channel in the filter. UNLESS:
+//If the filter only has one channel but im has multiple channels we want to apply the filter to each of those channels. Then we either sum between channels or not depending on if preserve is set.
+//Also, filter better have either the same number of channels as im or have 1 channel. I check this with an assert.
+    assert(im.c == filter.c || filter.c == 1);
+    if(filter.c==1 && preserve == 1){
+        image result_image = make_image(im.w, im.h, 3); 
+
+    
+        int filter_center_value_index = round(filter.w/2);
+        for (int j = 0; j < im.w; j++){
+            for (int k = 0; k < im.h; k++){
+                for (int l = 0; l < im.c; l++){
+                    float convolved_value = 0.0;
+                
+                    for (int m = 0; m < filter.w; m++){
+                        for (int n = 0; n < filter.h; n++){
+                        
+                            float filter_value = get_pixel(filter, m, n, 0);
+                            convolved_value = convolved_value + (get_pixel(im, j - filter_center_value_index + m, k - filter_center_value_index + n, l) * filter_value);
+
+                            
+
+                        }
+                    }
+                    set_pixel(result_image, j, k, l, convolved_value);   
+                }
+            }
+        }
+        return result_image;
+    }    
+
+    if(preserve == 0){
+        image result_image = make_image(im.w, im.h, 1); 
+    
+        int filter_center_value_index = round(filter.w/2);
+        for (int j = 0; j < im.w; j++){
+            for (int k = 0; k < im.h; k++){
+                float convolved_value = 0.0;
+                for (int l = 0; l < im.c; l++){
+                    
+                
+                    for (int m = 0; m < filter.w; m++){
+                        for (int n = 0; n < filter.h; n++){
+                        
+                            float filter_value = get_pixel(filter, m, n, 0);
+                            convolved_value = convolved_value + (get_pixel(im, j - filter_center_value_index + m, k - filter_center_value_index + n, l) * filter_value);
+
+                            
+
+                        }
+                    }
+                    
+                }
+            set_pixel(result_image, j, k, 0, convolved_value);   
+
+            }
+        }
+    return result_image;    
+    }    
     return make_image(1,1,1);
 }
 
