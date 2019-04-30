@@ -132,8 +132,17 @@ image make_sharpen_filter()
 
 image make_emboss_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+    image im = make_box_filter(3);
+    set_pixel(im, 0, 0, 0, -2);
+    set_pixel(im, 1, 0, 0, -1);
+    set_pixel(im, 2, 0, 0, 0);
+    set_pixel(im, 0, 1, 0, -1);
+    set_pixel(im, 1, 1, 0, 1);
+    set_pixel(im, 2, 1, 0, 1);
+    set_pixel(im, 0, 2, 0, 0);
+    set_pixel(im, 1, 2, 0, 1);
+    set_pixel(im, 2, 2, 0, 2);
+    return im;
 }
 
 // Question 2.2.1: Which of these filters should we use preserve when we run our convolution and which ones should we not? Why?
