@@ -3,8 +3,8 @@
 
 float nn_interpolate(image im, float x, float y, int c)
 {
-    int rounded_x = (int) round(x);
-    int rounded_y = (int) round(y);
+    int rounded_x = (int) roundf(x);
+    int rounded_y = (int) roundf(y);
     return get_pixel(im, rounded_x, rounded_y, c);
     
 }
