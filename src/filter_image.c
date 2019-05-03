@@ -142,8 +142,25 @@ image make_emboss_filter()
 
 image make_gaussian_filter(float sigma)
 {
-    // TODO
-    return make_image(1,1,1);
+    int filter_size = sigma * 6;
+    if(filter_size % 2 == 0){
+        filter_size += 1;
+    }
+    image filter = make_box_filter(filter_size);
+    
+    for (int j = 0; j < filter.w; j++){
+        for (int k = 0; k < filter.h; k++){
+            float gx = j - 3*sigma;
+            float gy = k - 3*sigma; 
+            float gaussian_value = (1.0/(TWOPI*powf(sigma,2))) * powf(EXP, -1.0*(powf(gx,2)+powf(gy,2))/(2*powf(sigma,2)));
+
+            set_pixel(filter, j, k, 0, gaussian_value);
+        }
+
+    }
+    return filter;
+
+
 }
 
 image add_image(image a, image b)
