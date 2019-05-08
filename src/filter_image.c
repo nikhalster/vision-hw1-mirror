@@ -182,8 +182,20 @@ image add_image(image a, image b)
 
 image sub_image(image a, image b)
 {
-    // TODO
-    return make_image(1,1,1);
+    assert(a.w == b.w && a.h == b.h && a.c == b.c);
+
+    image result_image = make_image(a.w, a.h, a.c); 
+    
+    for (int j = 0; j < a.w; j++){
+        for (int k = 0; k < a.h; k++){
+            for (int l = 0; l < a.c; l++){
+                float result_value = get_pixel(a, j, k, l) - get_pixel(b, j, k, l);
+                set_pixel(result_image, j, k, l, result_value);
+            }
+        }
+    }
+    return result_image;
+    
 }
 
 image make_gx_filter()
