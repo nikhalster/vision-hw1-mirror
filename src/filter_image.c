@@ -200,8 +200,17 @@ image sub_image(image a, image b)
 
 image make_gx_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+    image im = make_box_filter(3);
+    set_pixel(im, 0, 0, 0, -1);
+    set_pixel(im, 1, 0, 0, 0);
+    set_pixel(im, 2, 0, 0, 1);
+    set_pixel(im, 0, 1, 0, -2);
+    set_pixel(im, 1, 1, 0, 0);
+    set_pixel(im, 2, 1, 0, 2);
+    set_pixel(im, 0, 2, 0, -1);
+    set_pixel(im, 1, 2, 0, 0);
+    set_pixel(im, 2, 2, 0, 1);
+    return im;
 }
 
 image make_gy_filter()
