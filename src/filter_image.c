@@ -262,8 +262,24 @@ void feature_normalize(image im)
 
 image *sobel_image(image im)
 {
-    // TODO
-    return calloc(2, sizeof(image));
+    image gx = make_gx_filter();
+    image gy = make_gy_filter();
+    image gx_filter_image = convolve_image(im, gx, 0);
+    image gy_filter_image = convolve_image(im, gy, 0);
+
+    image * sobel_image =  calloc(2, sizeof(image));
+    sobel_image[0] = make_image(im.w, im.h, 1);
+    sobel_image[1] = make_image(im.w, im.h, 1);
+
+    for (int j = 0; j < im.w; j++){
+        for (int k = 0; k < im.h; k++){
+            float g = sqrtf(powf(get_pixel(gx_filter_image, j, k, 0), 2) + powf(get_pixel(gy_filter_image, j, k, 0), 2));
+            set_pixel(sobel_image[0], j, k, 0, g);
+            float theta = atan2f(get_pixel(gy_filter_image, j, k, 0), get_pixel(gx_filter_image, j, k, 0));
+            set_pixel(sobel_image[1], j, k, 0, theta);
+        }
+    }
+    return sobel_image;
 }
 
 image colorize_sobel(image im)
