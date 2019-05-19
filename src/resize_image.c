@@ -48,7 +48,29 @@ image nn_resize(image im, int w, int h)
 float bilinear_interpolate(image im, float x, float y, int c)
 {
     // TODO
-    return 0;
+    double num;
+    int rounded_x = (int) ceil(x);
+    int rounded_y = (int) ceil(y);
+    int floor_x = (int) floorf(x);
+    int floor_y = (int) floorf(y);
+
+    float y_axis_factor = modf(y, &num);
+    float x_axis_factor = modf(x, &num);
+
+
+
+    float bottom_right = get_pixel(im, rounded_x, rounded_y, c);
+    float top_right = get_pixel(im, rounded_x, floor_y, c);
+    float bottom_left = get_pixel(im, floor_x, rounded_y, c);
+    float top_left = get_pixel(im, floor_x, floor_y, c);
+
+    float q1 = (1 - y_axis_factor) * top_left + y_axis_factor * bottom_left;
+    float q2 = (1 - y_axis_factor) * top_right + y_axis_factor * bottom_right;
+    float interpolated_value = (1 - x_axis_factor) * q1 + x_axis_factor * q2;
+    return interpolated_value;
+
+
+
 }
 
 image bilinear_resize(image im, int w, int h)
