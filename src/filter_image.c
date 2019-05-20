@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "image.h"
 #define TWOPI 6.2831853
+#define EXP 2.718
 
 void l1_normalize(image im)
 {
@@ -85,6 +86,7 @@ image convolve_image(image im, image filter, int preserve)
     return result_image;    
     }    
     return make_image(1,1,1);
+
 }
 
 image make_highpass_filter()
